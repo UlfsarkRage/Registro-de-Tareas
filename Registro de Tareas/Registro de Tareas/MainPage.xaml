@@ -1,0 +1,41 @@
+﻿<!-- MainPage.xaml -->
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TareasApp"
+             x:Class="TareasApp.MainPage"
+             Title="Tareas Pendientes">
+
+    <StackLayout Padding="10">
+        <Label Text="Tareas Pendientes" FontSize="24" HorizontalOptions="Center" />
+
+        <ListView x:Name="TareasListView"
+                  ItemsSource="{Binding TareasPendientes}"
+                  SelectedItem="{Binding SelectedTarea}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Padding="5">
+                            <Label Text="{Binding Nombre}" FontSize="18" VerticalOptions="Center" />
+                            <Label Text="{Binding Descripcion}" FontSize="14" VerticalOptions="Center" />
+                            <Button Text="Eliminar" Command="{Binding Path=BindingContext.EliminarTareaCommand, Source={x:Reference TareasListView}}" CommandParameter="{Binding .}" />
+                            <Button Text="Completada" Command="{Binding Path=BindingContext.MarcarComoCompletadaCommand, Source={x:Reference TareasListView}}" CommandParameter="{Binding .}" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Text="Agregar Tarea" Command="{Binding AgregarTareaCommand}" />
+    </StackLayout>
+
+    <!-- AgregarTareaPage.xaml -->
+
+        <StackLayout Padding="10">
+            <Entry Placeholder="Nombre de la tarea" Text="{Binding Nombre}" />
+            <Editor Placeholder="Descripción de la tarea" Text="{Binding Descripcion}" />
+            <Picker Title="Categoría" ItemsSource="{Binding Categorias}" ItemDisplayBinding="{Binding Nombre}" SelectedItem="{Binding CategoriaSeleccionada}" />
+            <Button Text="Guardar" Command="{Binding GuardarTareaCommand}" />
+        </StackLayout>
+
+
+</ContentPage>
